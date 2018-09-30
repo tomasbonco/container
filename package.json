@@ -1,5 +1,5 @@
 {
-  "name": "simple-container",
+  "name": "xx-container",
   "version": "1.0.0",
   "description": "Dependency Injection inspired by Aurelia",
   "main": "dist/index.js",
