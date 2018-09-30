@@ -1,0 +1,28 @@
+{
+  "name": "simple-container",
+  "version": "1.0.0",
+  "description": "Dependency Injection inspired by Aurelia",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomasbonco/container.git"
+  },
+  "keywords": [
+    "dependency",
+    "injection",
+    "container",
+    "module"
+  ],
+  "author": "Tomas Bonco",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tomasbonco/container/issues"
+  },
+  "homepage": "https://github.com/tomasbonco/container#readme",
+  "dependencies": {
+    "reflect-metadata": "0.1.12"
+  }
+}
