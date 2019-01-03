@@ -4,7 +4,8 @@
         "rootDir": "src",
         "outDir": "dist",
         "target": "es5",
-        "lib": ["es6", "dom"]
+        "lib": ["es6", "dom"],
+        "declaration": true
     },
     "exclude": [
         "node_modules"

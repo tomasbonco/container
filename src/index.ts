@@ -35,7 +35,7 @@ export class Container
 	 * @param {any} key - class-like object (constructor) to make instance of
 	 * @returns {any} - instance of class provided
 	 */
-	get( key: any ): any
+	async get( key: any ): Promise<any>
 	{
 		// Find instance in instance-map
 		
@@ -47,7 +47,7 @@ export class Container
 
 		if ( ! instance )
 		{
-			instance = this.createInstance( key );
+			instance = await this.createInstance( key );
 			this.instances.set( key, instance );
 		}
 
@@ -151,7 +151,7 @@ export class Container
 	 * @param {any} target - Class-like object (constructor) to make instance of
 	 * @returns {any} - instance
 	 */
-	createInstance( target: any ): any
+	async createInstance( target: any, args: any[] = [] ): Promise<any>
 	{
 		let instance: any;
 
@@ -167,10 +167,18 @@ export class Container
 
 			if ( target.__inject && Array.isArray( target.__inject ) )
 			{
-				dependencies = target.__inject.map( x => this.get( x ) );
+				for ( const inject of target.__inject )
+				{
+					dependencies.push( await this.get( inject ) )
+				}
 			}
 
-			instance = new target( ...dependencies );
+			instance = new target( ...dependencies, ...args );
+
+			if ( instance.onResolve )
+			{
+				await instance.onResolve();
+			}
 		}
 
 		catch ( e )
@@ -214,7 +222,7 @@ export function autoinject( potentialTarget?: any ): any
 }
 
 
-class Resolver
+export class Resolver
 {
 	constructor()
 	{}
