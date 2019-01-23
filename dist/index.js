@@ -193,8 +193,8 @@ var Container = /** @class */ (function () {
                         return [3 /*break*/, 2];
                     case 5:
                         instance = new (target.bind.apply(target, [void 0].concat(dependencies, args)))();
-                        if (!instance.onRegister) return [3 /*break*/, 7];
-                        return [4 /*yield*/, instance.onRegister()];
+                        if (!instance.onResolve) return [3 /*break*/, 7];
+                        return [4 /*yield*/, instance.onResolve()];
                     case 6:
                         _d.sent();
                         _d.label = 7;
