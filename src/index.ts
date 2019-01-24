@@ -161,34 +161,21 @@ export class Container
 			throw new Error( 'Container cannot make instance of non-function!' );
 		}
 
-		try
+		let dependencies: any[] = [];
+
+		if ( target.__inject && Array.isArray( target.__inject ) )
 		{
-			let dependencies: any[] = [];
-
-			if ( target.__inject && Array.isArray( target.__inject ) )
+			for ( const inject of target.__inject )
 			{
-				for ( const inject of target.__inject )
-				{
-					dependencies.push( await this.get( inject ) )
-				}
-			}
-
-			instance = new target( ...dependencies, ...args );
-
-			if ( instance.onResolve )
-			{
-				await instance.onResolve();
+				dependencies.push( await this.get( inject ) )
 			}
 		}
 
-		catch ( e )
-		{
-			if ( e instanceof TypeError )
-			{
-				throw e;
-			}
+		instance = new target( ...dependencies, ...args );
 
-			console.log( e );
+		if ( instance.onResolve )
+		{
+			await instance.onResolve();
 		}
 
 		return instance;

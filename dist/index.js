@@ -1,8 +1,11 @@
 "use strict";
 var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    };
     return function (d, b) {
         extendStatics(d, b);
         function __() { this.constructor = d; }
@@ -24,8 +27,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
         while (_) try {
-            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
-            if (y = 0, t) op = [0, t.value];
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
             switch (op[0]) {
                 case 0: case 1: t = op; break;
                 case 4: _.label++; return { value: op[1], done: false };
@@ -165,7 +168,7 @@ var Container = /** @class */ (function () {
     Container.prototype.createInstance = function (target, args) {
         if (args === void 0) { args = []; }
         return __awaiter(this, void 0, void 0, function () {
-            var instance, dependencies, _i, _a, inject_1, _b, _c, e_1;
+            var instance, dependencies, _i, _a, inject_1, _b, _c;
             return __generator(this, function (_d) {
                 switch (_d.label) {
                     case 0:
@@ -173,40 +176,29 @@ var Container = /** @class */ (function () {
                             console.log(target);
                             throw new Error('Container cannot make instance of non-function!');
                         }
+                        dependencies = [];
+                        if (!(target.__inject && Array.isArray(target.__inject))) return [3 /*break*/, 4];
+                        _i = 0, _a = target.__inject;
                         _d.label = 1;
                     case 1:
-                        _d.trys.push([1, 8, , 9]);
-                        dependencies = [];
-                        if (!(target.__inject && Array.isArray(target.__inject))) return [3 /*break*/, 5];
-                        _i = 0, _a = target.__inject;
-                        _d.label = 2;
-                    case 2:
-                        if (!(_i < _a.length)) return [3 /*break*/, 5];
+                        if (!(_i < _a.length)) return [3 /*break*/, 4];
                         inject_1 = _a[_i];
                         _c = (_b = dependencies).push;
                         return [4 /*yield*/, this.get(inject_1)];
-                    case 3:
+                    case 2:
                         _c.apply(_b, [_d.sent()]);
-                        _d.label = 4;
-                    case 4:
+                        _d.label = 3;
+                    case 3:
                         _i++;
-                        return [3 /*break*/, 2];
-                    case 5:
+                        return [3 /*break*/, 1];
+                    case 4:
                         instance = new (target.bind.apply(target, [void 0].concat(dependencies, args)))();
-                        if (!instance.onResolve) return [3 /*break*/, 7];
+                        if (!instance.onResolve) return [3 /*break*/, 6];
                         return [4 /*yield*/, instance.onResolve()];
-                    case 6:
+                    case 5:
                         _d.sent();
-                        _d.label = 7;
-                    case 7: return [3 /*break*/, 9];
-                    case 8:
-                        e_1 = _d.sent();
-                        if (e_1 instanceof TypeError) {
-                            throw e_1;
-                        }
-                        console.log(e_1);
-                        return [3 /*break*/, 9];
-                    case 9: return [2 /*return*/, instance];
+                        _d.label = 6;
+                    case 6: return [2 /*return*/, instance];
                 }
             });
         });
